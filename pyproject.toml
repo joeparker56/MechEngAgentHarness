@@ -1,0 +1,51 @@
+[project]
+name = "mecheng"
+version = "0.1.0"
+description = "Agent harness and benchmark for mechanical engineering design (CAD, FEA, CFD)"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "pydantic>=2.7",
+    "numpy>=1.26",
+]
+
+[project.optional-dependencies]
+# Engineering tool stack. Installed inside the task Docker images (and optionally on the host for dev).
+tools = [
+    "build123d>=0.9",
+    "gmsh>=4.13",
+    "meshio>=5.3",
+    "pyvista>=0.44",
+    "trimesh>=4.4",
+]
+
+[project.scripts]
+mecheng = "mecheng.cli:main"
+
+[dependency-groups]
+# Host-side: agent loop + benchmark runner. Never installed in task images.
+agent = [
+    "harbor",
+    "langgraph>=0.6",
+    "langchain-anthropic",
+]
+dev = [
+    "pytest>=8",
+    "ruff>=0.6",
+]
+
+[tool.uv]
+default-groups = ["agent", "dev"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mecheng", "src/mecheng_agent"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

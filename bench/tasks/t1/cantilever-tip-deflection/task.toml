@@ -1,0 +1,27 @@
+schema_version = "1.3"
+artifacts = ["/app/output"]
+
+[task]
+name = "mecheng/cantilever-tip-deflection"
+description = "3D solid FEA of a tip-loaded steel cantilever; report tip deflection."
+keywords = ["fea", "calculix", "static", "t1"]
+
+[metadata]
+tier = "t1"
+domain = "fea"
+difficulty_explanation = "Single-part linear static FEA with a closed-form cross-check; tests BC/load setup, units and mesh convergence."
+
+[agent]
+timeout_sec = 1800.0
+
+[verifier]
+timeout_sec = 300.0
+environment_mode = "separate"
+
+[environment]
+docker_image = "mecheng-fea:dev"
+# Should be "no-network", but Harbor's egress control needs nftables kernel support that the
+# Docker Desktop WSL2 kernel lacks (probe fails). Revisit on a Linux host.
+network_mode = "public"
+cpus = 2
+memory_mb = 4096

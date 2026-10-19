@@ -1,0 +1,22 @@
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.ruff_cache/
+dist/
+build/
+
+# editor / notebook scratch
+.notebook/
+
+# run artifacts
+jobs/
+trials/
+runs/
+out/
+*.frd
+*.dat
+*.sta
+*.cvg
+*.12d
+spooles.out
